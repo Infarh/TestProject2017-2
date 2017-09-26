@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestProject
 {
-    abstract class Antenna
+    public abstract class Antenna
     {
         public abstract Complex Pattern(double th);
 
@@ -24,7 +24,7 @@ namespace TestProject
         }
     }
 
-    class UniformAntenna : Antenna
+    public class UniformAntenna : Antenna
     {
         public override Complex Pattern(double th)
         {
@@ -32,7 +32,7 @@ namespace TestProject
         }
     }
 
-    class DipoleAntenna : Antenna
+    public class DipoleAntenna : Antenna
     {
         public override Complex Pattern(double th)
         {
@@ -40,7 +40,7 @@ namespace TestProject
         }
     }
 
-    class VibratorAntenna  : Antenna
+    public class VibratorAntenna  : Antenna
     {
         public override Complex Pattern(double th)
         {

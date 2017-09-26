@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestProject
 {
-    class AntennaArray : Antenna
+    public class AntennaArray : Antenna
     {
         private Antenna[] f_Antennas;
         private double f_d;
