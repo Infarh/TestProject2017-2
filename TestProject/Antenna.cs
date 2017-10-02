@@ -19,7 +19,7 @@ namespace TestProject
                 return f * f * Math.Cos(th);
             };
 
-            var I = Program.Integrate(F, -Math.PI/2, Math.PI/2);
+            var I = Service.Integrate(F, -Math.PI/2, Math.PI/2);
             return 2 / I;
         }
     }

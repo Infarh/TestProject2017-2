@@ -2,33 +2,29 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         xmlns:local="clr-namespace:AntennaWpfGUI"
-        xmlns:oxy="http://oxyplot.org/wpf"
-        mc:Ignorable="d"
-        Title="{Binding Title}" 
+        Title="Окно!"
         Height="350" Width="525">
-    <Window.DataContext>
-        <local:MainModel/>
-    </Window.DataContext>
-    <Grid>
-        <Label Content="Число элементов" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" 
-                 Text="{Binding N}" VerticalAlignment="Top" Width="106"/>
-        <Label Content="Шаг между излучателями" HorizontalAlignment="Left" Margin="130,10,0,0" VerticalAlignment="Top"/>
-        <TextBox Height="23" Margin="130,36,238.4,0" TextWrapping="Wrap" 
-                 Text="{Binding d}" VerticalAlignment="Top"/>
-        <GroupBox Header="Антенная решётка" Margin="10,64,10.4,9.8"
-                  DataContext="{Binding Antenna}">
-            <Grid>
-                <TextBlock HorizontalAlignment="Left" Margin="10,26,0,0" TextWrapping="Wrap" 
-                           Text="{Binding N, StringFormat=Число элементов {0}}" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" 
-                           Text="{Binding d, StringFormat=Шаг между элементами {0}}" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="10,42,0,0" TextWrapping="Wrap" 
-                           Text="{Binding Length, StringFormat=Размер решётки {0}}" VerticalAlignment="Top"/>
-            </Grid>
-        </GroupBox>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выход" Click="MenuItem_OnClick"/>
+            </MenuItem>
+            <MenuItem Header="Настройки"/>
+            <MenuItem Header="О программе"/>
+        </Menu> 
+        <Grid>
+            <TextBlock HorizontalAlignment="Left" Margin="22,10,0,0" TextWrapping="Wrap" 
+                       Text="Длина вибратора" VerticalAlignment="Top"/>
+            <TextBox Name="Length" HorizontalAlignment="Left" Height="23" Margin="22,31,0,0" TextWrapping="Wrap" 
+                     Text="0,1" VerticalAlignment="Top" Width="120" TextChanged="Length_TextChanged"/>
+            <TextBlock HorizontalAlignment="Left" Margin="22,54,0,0" TextWrapping="Wrap" 
+                       Text="КНД" VerticalAlignment="Top"/>
+            <TextBox HorizontalAlignment="Left" Margin="51,54,0,0" TextWrapping="Wrap" 
+                       Name="D" IsReadOnly="true"
+                       Text="TextBlock" VerticalAlignment="Top" RenderTransformOrigin="0.939,0.669"/>
 
-    </Grid>
+        </Grid>
+    </DockPanel>
 </Window>

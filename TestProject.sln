@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{6D7508EB-B9D6-41E2-BB8D-9F814CA17327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntennaFormsGUI", "AntennaFormsGUI\AntennaFormsGUI.csproj", "{540B8017-8B81-4E68-9D19-EAD5225D811B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntennaWpfGUI", "AntennaWpfGUI\AntennaWpfGUI.csproj", "{A3541DC5-DCC4-41E8-966D-9B2DCC0EC4BA}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{6D7508EB-B9D6-41E2-BB8D-9F814CA17327}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D7508EB-B9D6-41E2-BB8D-9F814CA17327}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D7508EB-B9D6-41E2-BB8D-9F814CA17327}.Release|Any CPU.Build.0 = Release|Any CPU
-		{540B8017-8B81-4E68-9D19-EAD5225D811B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{540B8017-8B81-4E68-9D19-EAD5225D811B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{540B8017-8B81-4E68-9D19-EAD5225D811B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{540B8017-8B81-4E68-9D19-EAD5225D811B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A3541DC5-DCC4-41E8-966D-9B2DCC0EC4BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A3541DC5-DCC4-41E8-966D-9B2DCC0EC4BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3541DC5-DCC4-41E8-966D-9B2DCC0EC4BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
