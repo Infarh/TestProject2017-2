@@ -40,7 +40,7 @@ namespace TestProject
             {
                 var f = f_Antennas[i].Pattern(th);
                 F += f * Complex.Exp(-Complex.ImaginaryOne
-                                     * 2 * Math.PI * f_d * Math.Sin(th));
+                                     * 2 * Math.PI * f_d * i * Math.Sin(th));
             }
             return F;
         }

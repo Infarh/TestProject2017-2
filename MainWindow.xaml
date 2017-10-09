@@ -13,7 +13,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
-                <MenuItem Header="Выход" />
+                <MenuItem Header="Выход" Click="MenuItem_OnClick" />
             </MenuItem>
             <MenuItem Header="Настройки" />
             <MenuItem Header="О программе" />
@@ -34,13 +34,19 @@
                     <TextBox Width="75" Margin="10,0,0,0" 
                              Text="{Binding d, StringFormat={}{0:0.0#}}"/>
                     <Slider Minimum="0.1" Maximum="1" Value="{Binding d}" 
-                            Width="300" SmallChange="0.05" LargeChange="0.1"/>
+                            Width="300" SmallChange="0.05" LargeChange="0.1">
+                        <Slider.Style>
+                            <Style TargetType="Slider">
+                                
+                            </Style>
+                        </Slider.Style>
+                    </Slider>
                 </StackPanel>   
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Размер апертуры"/>
-                    <TextBlock Text="{Binding Antenna.Length, StringFormat='{}{0:0.###} m'}" Margin="2,0"/>
+                    <TextBlock Text="{Binding Antenna.Length}" Margin="2,0"/>
                     <TextBlock Text="КНД"/>
-                    <TextBlock Text="{Binding KND, Mode=OneWay, StringFormat='{}{0:0.###} db'}" Margin="2,0"/>
+                    <TextBlock Text="{Binding KND, Mode=OneWay}" Margin="2,0"/>
                 </StackPanel>
             </StackPanel>
             <TabControl Grid.Row="1">
@@ -49,7 +55,7 @@
                         <oxy:Plot.Axes>
                             <oxy:LinearAxis Position="Bottom" Title="Angle"/>
                             <!--<oxy:LinearAxis Position="Left" Title="20Lg|F(th)|"/>--> 
-                            <oxy:LogarithmicAxis Position="Left" Title="|F(th)|" AbsoluteMinimum="0.0001"/>
+                            <oxy:LogarithmicAxis Position="Left" Title="|F(th)|"/>
                         </oxy:Plot.Axes>
                         <oxy:Plot.Series>
                             <oxy:LineSeries ItemsSource="{Binding Pattern}"
