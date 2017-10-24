@@ -10,28 +10,12 @@ namespace AntennaWpfGUI
 {
     public class MainModel : INotifyPropertyChanged
     {
+        /// <summary>Шаг между элементами</summary>
         private double f_d = 0.5;
+        /// <summary>Число антенных элементов</summary>
         private int f_N = 16;
-
-        private string f_Title;
-
-        public MainModel()
-        {
-            Title = "Текст главного окна";
-            ChangeTitleCommand = new LamdaCommand(() => Title = "Hello World!");
-        }
-
-        public string Title
-        {
-            get => f_Title;
-            set
-            {
-                f_Title = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Title"));
-            }
-        }
-
-        public ICommand ChangeTitleCommand { get; }
+        /// <summary>Угол отклонения луча</summary>
+        private double f_Th0;
 
         public AntennaArray Antenna { get; private set; }
 
@@ -41,9 +25,11 @@ namespace AntennaWpfGUI
             get => f_N;
             set
             {
+                if(value == f_N) return;
                 f_N = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("N"));
                 Antenna = new AntennaArray(f_d, GetAntennas(f_N));
+                Antenna.Th0 = Th0;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Antenna"));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("KND"));
                 CalculatePattern();
@@ -56,9 +42,11 @@ namespace AntennaWpfGUI
             get => f_d;
             set
             {
+                if(value == f_d) return;
                 f_d = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("d"));
                 Antenna = new AntennaArray(f_d, GetAntennas(f_N));
+                Antenna.Th0 = Th0;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Antenna"));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("KND"));
                 CalculatePattern();
@@ -71,23 +59,42 @@ namespace AntennaWpfGUI
         /// <summary>Диаграмма направленности</summary>
         public PatternValue[] Pattern { get; set; }
 
+        /// <summary>Угол отклонения луча</summary>
+        public double Th0
+        {
+            get => f_Th0;
+            set
+            {
+                if(f_Th0 == value) return;
+                f_Th0 = value;
+                Antenna.Th0 = value * Math.PI / 180;
+                CalculatePattern();
+            }
+        }
+
+        public MainModel()
+        {
+            Antenna = new AntennaArray(f_d, GetAntennas(f_N));
+            CalculatePattern();
+        }
+
         private void CalculatePattern()
         {
             const double th_start = -90;
             const double th_end = 90;
             const double dth = 0.5;
 
-            var delta_th = th_end - th_start;
-            var N = (int)(delta_th / dth) + 1;
+            const double delta_th = th_end - th_start;
+            const int N = (int)(delta_th / dth) + 1;
 
             var data = new PatternValue[N];
 
-            var toRad = Math.PI / 180;
+            const double toRad = Math.PI / 180;
             for (var i = 0; i < N; i++)
                 data[i] = new PatternValue
                 {
                     Angle = i * dth + th_start,
-                    Value = Antenna.Pattern(toRad * (i * dth + th_start)).Magnitude
+                    Value = Antenna.Pattern((i * dth + th_start) * toRad).Magnitude
                 };
             Pattern = data;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Pattern"));
@@ -103,10 +110,14 @@ namespace AntennaWpfGUI
         }
     }
 
+    /// <summary>Значение диаграммы направленности</summary>
     public class PatternValue
     {
+        /// <summary>Угол</summary>
         public double Angle { get; set; }
+        /// <summary>Амплитудное значение ДН</summary>
         public double Value { get; set; }
+        /// <summary>Значение ДН в дБ</summary>
         public double Value_in_db => Value.In_db();
     }
 }

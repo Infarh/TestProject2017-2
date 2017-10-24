@@ -9,23 +9,25 @@ namespace TestProject
 {
     public class AntennaArray : Antenna
     {
+        /// <summary>Массив антенных элементов</summary>
         private Antenna[] f_Antennas;
+        /// <summary>Шаг между излучателями</summary>
         private double f_d;
 
-        public int N
-        {
-            get { return f_Antennas.Length; }
-        }
+        /// <summary>Число излучателей</summary>
+        public int N => f_Antennas.Length;
 
-        public double d
-        {
-            get { return f_d; }
-        }
+        /// <summary>Шаг между излучателями</summary>
+        public double d => f_d;
 
-        public double Length
-        {
-            get { return f_d * (N-1); }
-        }
+        /// <summary>Размер апертуры</summary>
+        public double Length => f_d * (N-1);
+
+        /// <summary>Угол фазирования</summary>
+        public double Th0 { get; set; }
+
+        /// <summary>Амплитудное рапределение по апертуре</summary>
+        public Func<double, double> A { get; set; } = x => 1;
 
         public AntennaArray(double d, Antenna[] antennas)
         {
@@ -36,11 +38,14 @@ namespace TestProject
         public override Complex Pattern(double th)
         {
             var F = new Complex(0,0);
+            var L = Length;
             for (var i = 0; i < f_Antennas.Length; i++)
             {
-                var f = f_Antennas[i].Pattern(th);
+                var x = i * f_d - L / 2;
+                var f = A(x) * f_Antennas[i].Pattern(th);
                 F += f * Complex.Exp(-Complex.ImaginaryOne
-                                     * 2 * Math.PI * f_d * i * Math.Sin(th));
+                                     * 2 * Math.PI * f_d * i 
+                                     * (Math.Sin(th) - Math.Sin(Th0)));
             }
             return F;
         }
