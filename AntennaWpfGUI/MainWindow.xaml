@@ -4,10 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         xmlns:local="clr-namespace:AntennaWpfGUI"
-        xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf" 
-
+        xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
         Title="Окно!"
-        Height="350" Width="525">
+        Height="600" Width="800">
     <Window.DataContext>
         <local:MainModel/>
     </Window.DataContext>
@@ -24,30 +23,28 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="Число элементов"/> 
-                    <TextBox Width="75" Margin="46,0,0,0" Text="{Binding N}"/>
-                    <Slider Minimum="1" Maximum="32" Value="{Binding N}" Width="300"/>
-                </StackPanel>    
-                <StackPanel Orientation="Horizontal" Margin="5,5">
-                    <TextBlock Text="Шаг между элементами"/>
-                    <TextBox Width="75" Margin="10,0,0,0" 
-                             Text="{Binding d, StringFormat={}{0:0.0#}}"/>
-                    <Slider Minimum="0.1" Maximum="1" Value="{Binding d}" 
-                            Width="300" SmallChange="0.05" LargeChange="0.1"/>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <StackPanel Margin="2,0">
+                    <TextBlock Text="Число элементов" HorizontalAlignment="Right"/>
+                    <TextBlock Text="Шаг между элементами" HorizontalAlignment="Right"/>
+                    <TextBlock Text="Угол отклонения луча" HorizontalAlignment="Right"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="5,5">
-                    <TextBlock Text="Угол отклонения луча"/>
-                    <TextBox Width="70" Margin="10,0,5,0" 
-                             Text="{Binding Th0, StringFormat={}{0:0.0#}}"/>
-                    <Slider Minimum="-30" Maximum="30" Value="{Binding Th0}" 
-                            Width="300" SmallChange="0.5" LargeChange="1"/>  
+                <StackPanel>
+                    <TextBox Width="40" Text="{Binding N, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center"/>
+                    <TextBox Width="40" Text="{Binding d, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0#}}" HorizontalContentAlignment="Center"/>
+                    <TextBox Width="40" Text="{Binding Th0, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0#}}" HorizontalContentAlignment="Center"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Размер апертуры"/>
+                <StackPanel Width="200">
+                    <Slider Value="{Binding N}" Minimum="1" Maximum="64"/>
+                    <Slider Value="{Binding d}" Minimum="0.01" Maximum="1.5" SmallChange="0.01" LargeChange="0.1"/>
+                    <Slider Value="{Binding Th0}" Minimum="-45" Maximum="45" SmallChange="1" LargeChange="5" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="5,0,2,0">
+                    <TextBlock Text="Размер апертуры:" HorizontalAlignment="Right"/>
+                    <TextBlock Text="КНД:" HorizontalAlignment="Right"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
                     <TextBlock Text="{Binding Antenna.Length, StringFormat='{}{0:0.###} m'}" Margin="2,0"/>
-                    <TextBlock Text="КНД"/>
                     <TextBlock Text="{Binding KND, Mode=OneWay, StringFormat='{}{0:0.###} db'}" Margin="2,0"/>
                 </StackPanel>
             </StackPanel>
@@ -55,8 +52,8 @@
                 <TabItem Header="График">
                     <oxy:Plot>
                         <oxy:Plot.Axes>
-                            <oxy:LinearAxis Position="Bottom" Title="Angle"/>
-                            <oxy:LinearAxis Position="Left" Title="20Lg|F(th)|" AbsoluteMinimum="-20"/> 
+                            <oxy:LinearAxis Position="Bottom" Title="Angle" MajorGridlineStyle="Solid" MinorGridlineStyle="Dash" MajorStep="10" MinorStep="2"/>
+                            <oxy:LinearAxis Position="Left" Title="20Lg|F(th)|" AbsoluteMinimum="-20" MajorGridlineStyle="Solid" MinorGridlineStyle="Dash" />
                             <!--<oxy:LogarithmicAxis Position="Left" Title="|F(th)|" AbsoluteMinimum="0.0001"/>-->
                         </oxy:Plot.Axes>
                         <oxy:Plot.Series>
@@ -66,7 +63,7 @@
                                             Color="Red"
                                             StrokeThickness="2"/>
                         </oxy:Plot.Series>
-                    </oxy:Plot>
+                    </oxy:Plot> 
                 </TabItem>
             </TabControl>
         </Grid>

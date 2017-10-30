@@ -13,14 +13,16 @@ namespace TestProject
 
         public double GetKND()
         {
+            var max = double.NegativeInfinity;
             Func<double, double> F = th =>
             {
                 var f = Pattern(th).Magnitude;
+                if (f > max) max = f;
                 return f * f * Math.Cos(th);
             };
 
             var I = Service.Integrate(F, -Math.PI/2, Math.PI/2);
-            return 2 / I;
+            return 2 * max * max / I;
         }
     }
 

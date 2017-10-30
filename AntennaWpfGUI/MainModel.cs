@@ -88,7 +88,7 @@ namespace AntennaWpfGUI
             const int N = (int)(delta_th / dth) + 1;
 
             var data = new PatternValue[N];
-
+            
             const double toRad = Math.PI / 180;
             for (var i = 0; i < N; i++)
                 data[i] = new PatternValue
