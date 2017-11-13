@@ -42,10 +42,14 @@
                 <StackPanel Orientation="Vertical" Margin="5,0,2,0">
                     <TextBlock Text="Размер апертуры:" HorizontalAlignment="Right"/>
                     <TextBlock Text="КНД:" HorizontalAlignment="Right"/>
+                    <TextBlock HorizontalAlignment="Right">Ширина луча</TextBlock>
+                    <TextBlock HorizontalAlignment="Right">УБЛ</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="{Binding Antenna.Length, StringFormat='{}{0:0.###} m'}" Margin="2,0"/>
                     <TextBlock Text="{Binding KND, Mode=OneWay, StringFormat='{}{0:0.###} db'}" Margin="2,0"/>
+                    <TextBlock Text="{Binding BeamWidth07, StringFormat={}{0:0.##}°}"/>
+                    <TextBlock Text="{Binding UBL, StringFormat={}{0:0.##}}"/>
                 </StackPanel>
             </StackPanel>
             <TabControl Grid.Row="1">
