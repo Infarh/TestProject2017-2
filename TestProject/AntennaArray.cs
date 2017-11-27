@@ -29,6 +29,8 @@ namespace TestProject
         /// <summary>Амплитудное рапределение по апертуре</summary>
         public Func<double, double> A { get; set; } = x => 1;
 
+        public Complex[] A0 { get; set; }
+
         public AntennaArray(double d, Antenna[] antennas)
         {
             f_Antennas = antennas;
@@ -39,10 +41,14 @@ namespace TestProject
         {
             var F = new Complex(0,0);
             var L = Length;
+            var a0 = A0;
+            if (a0 != null && a0.Length != f_Antennas.Length)
+                a0 = null;
             for (var i = 0; i < f_Antennas.Length; i++)
             {
                 var x = i * f_d - L / 2;
                 var f = A(x) * f_Antennas[i].Pattern(th);
+                if (a0 != null) f *= a0[i];
                 F += f * Complex.Exp(-Complex.ImaginaryOne
                                      * 2 * Math.PI * f_d * i 
                                      * (Math.Sin(th) - Math.Sin(Th0)));

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Numerics;
 using System.Windows.Input;
 using TestProject;
 
@@ -77,9 +78,43 @@ namespace AntennaWpfGUI
         public double BeamWidth07 => RightBeamEdge07 - LeftBeamEdge07;
         public double UBL { get; private set; }
 
+        public ICommand LoadDestribution { get; }
+
         public MainModel()
         {
             Antenna = new AntennaArray(f_d, GetAntennas(f_N));
+            CalculatePattern();
+            LoadDestribution = new LamdaCommand(OnLoadDestribution);
+        }
+
+        private void OnLoadDestribution()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.Title = "Выбор файла с амплитудным распределением";
+            dialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+            var result = dialog.ShowDialog();
+            if (result != true) return;
+            var file_name = dialog.FileName;
+            var text = System.IO.File.ReadAllText(file_name);
+            var items = text.Split('\n');
+            List<Complex> A0 = new List<Complex>();
+            for (var i = 0; i < items.Length; i++)
+                if (items[i].Length != 0)
+                {
+                    var str = items[i];
+                    var sign_index = str.IndexOf('+', 1);
+                    if (sign_index < 0)
+                        sign_index = str.IndexOf('-', 1);
+                    var re_str = str.Substring(0, sign_index);
+                    var im_str = str.Substring(sign_index).Trim('i', '\r');
+
+                    var re = double.Parse(re_str);
+                    var im = double.Parse(im_str);
+
+                    var z = new Complex(re, im);
+                    A0.Add(z);
+                }
+            Antenna.A0 = A0.ToArray();
             CalculatePattern();
         }
 
@@ -160,7 +195,7 @@ namespace AntennaWpfGUI
                     if (ubl < value)
                         ubl = value;
                 }
-            UBL = 20*Math.Log10(ubl/max);
+            UBL = 20 * Math.Log10(ubl / max);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UBL"));
         }
 

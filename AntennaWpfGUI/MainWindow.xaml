@@ -51,13 +51,15 @@
                     <TextBlock Text="{Binding BeamWidth07, StringFormat={}{0:0.##}°}"/>
                     <TextBlock Text="{Binding UBL, StringFormat={}{0:0.##}}"/>
                 </StackPanel>
+                <Button Content="Загрузить амплитудное распределение"
+                        Command="{Binding LoadDestribution}"/>
             </StackPanel>
             <TabControl Grid.Row="1">
                 <TabItem Header="График">
                     <oxy:Plot>
                         <oxy:Plot.Axes>
                             <oxy:LinearAxis Position="Bottom" Title="Angle" MajorGridlineStyle="Solid" MinorGridlineStyle="Dash" MajorStep="10" MinorStep="2"/>
-                            <oxy:LinearAxis Position="Left" Title="20Lg|F(th)|" AbsoluteMinimum="-20" MajorGridlineStyle="Solid" MinorGridlineStyle="Dash" />
+                            <oxy:LinearAxis Position="Left" Title="20Lg|F(th)|" AbsoluteMinimum="-60" MajorGridlineStyle="Solid" MinorGridlineStyle="Dash" />
                             <!--<oxy:LogarithmicAxis Position="Left" Title="|F(th)|" AbsoluteMinimum="0.0001"/>-->
                         </oxy:Plot.Axes>
                         <oxy:Plot.Series>
